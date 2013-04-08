@@ -10,4 +10,4 @@ use FramsiePl;
 use Data::Dumper;
 
 ## Dump the FramsiePl instance
-print Dumper(FramsiePl::Instance()->AddRedirect('/home', '/default'));
+print Dumper(FramsiePl::Instance()->AddRedirect('/home', '/default')->Execute('/index.pl/home/default/foo/bar'));

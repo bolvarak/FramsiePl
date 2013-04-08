@@ -12,6 +12,9 @@ use Cwd;
 ## Allow data dumping
 use Data::Dumper;
 
+## Use the FramsiePl Request Object
+use FramsiePl::Request;
+
 ## We want to allow JSON config files and communications
 use JSON;
 
@@ -87,6 +90,7 @@ sub new {
 		ModelPath         => getcwd().'/Application/Models',
 		ModulePath        => getcwd().'/Library',
 		Redirects         => {},
+		RequestObject     => undef,
 		TemplatePath      => getcwd().'/Application/Templates',
 		ViewPath          => getcwd().'/Application/Views'
 	};
@@ -114,10 +118,19 @@ sub AddRedirect {
 	return $oSelf;
 }
 
-
+###
+## This subroutine executes the framework
+## @param FramsiePl $oSelf
+## @param string $sRequestUri [undef]
+## @return FramsiePl $oSelf
+###
 sub Execute {
-	## Load the instance
-	my($oSelf) = shift;
+	## Load the instance and request URI
+	my($oSelf, $sRequestUri)  = @_;
+	## Load the request
+	$oSelf->{"RequestObject"} = FramsiePl::Request::Instance($sRequestUri)->Route();
+	## Return the instance
+	return $oSelf;
 }
 
 ###############################################################################
